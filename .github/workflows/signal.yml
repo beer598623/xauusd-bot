@@ -2,15 +2,19 @@ name: XAUUSD Silver Bullet Bot
 
 on:
   schedule:
-    - cron: '0,15,30,45 * * * 1-5'
+    # รันตรงชั่วโมง 06:00-23:00 GMT+7 = 23:00-16:00 UTC
+    # London Window: 15:00 GMT+7 = 08:00 UTC
+    # NY AM Window: 22:00 GMT+7 = 15:00 UTC
+    - cron: '0 23 * * 1-5'
+    - cron: '0 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16 * * 2-6'
   workflow_dispatch:
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - run: pip install requests pandas numpy -q
